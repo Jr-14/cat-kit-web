@@ -5,6 +5,9 @@ const BASE_PATH = "./db";
 
 const run = async () => {
     const dbFileName = "testDb.sqlite";
+    if (!fs.existsSync(`${BASE_PATH}/${dbFileName}`)) {
+
+    }
     const db = new sqlite3.Database("testDb.sqlite");
 
     db.serialize(() => {
