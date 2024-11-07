@@ -8,10 +8,10 @@ const createCatTable = (db) => {
     const createTableQuery = `CREATE TABLE IF NOT EXISTS Cats (
     id INTEGER NOT NULL PRIMARY KEY
     , microchip TEXT
-    , name TEXT
+    , name TEXT NOT NULL
     , description TEXT
     , dateOfBirth TEXT
-    , sex TEXT
+    , sex TEXT NOT NULL
     , breed TEXT
 );`;
 
@@ -20,9 +20,18 @@ const createCatTable = (db) => {
     });
 };
 
+const deleteCatTable = (db) => {
+    const deleteTableQuery = `DROP TABLE IF EXISTS Cats;`;
+
+    db.serialize(() => {
+        db.run(deleteTableQuery);
+    });
+};
+
 const run = async () => {
     const db = new sqlite3.Database(dbFilePath);
 
+    deleteCatTable(db);
     createCatTable(db);
 
     db.close();
