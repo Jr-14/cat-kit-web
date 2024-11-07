@@ -4,7 +4,7 @@ const BASE_PATH = "./db";
 const FILE_NAME = "testDb.sqlite";
 const dbFilePath = `${BASE_PATH}/${FILE_NAME}`;
 
-const createCatTable = (db) => {
+const createCatTable = (db: sqlite3.Database) => {
     const createTableQuery = `CREATE TABLE IF NOT EXISTS Cats (
     id INTEGER NOT NULL PRIMARY KEY
     , microchip TEXT
@@ -20,7 +20,7 @@ const createCatTable = (db) => {
     });
 };
 
-const deleteCatTable = (db) => {
+const deleteCatTable = (db: sqlite3.Database) => {
     const deleteTableQuery = `DROP TABLE IF EXISTS Cats;`;
 
     db.serialize(() => {
