@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "remix vite:build",
-    "dev": "remix vite:dev",
+    "dev": "npm run create-tables && remix vite:dev",
     "start": "remix-serve build/server/index.js",
     "typecheck": "tsc",
     "create-tables": "tsx scripts/create.ts"

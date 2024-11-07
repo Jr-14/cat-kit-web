@@ -6,7 +6,6 @@ const retrieve = async (db: sqlite3.Database): Promise<Cat> => {
     const sql = `SELECT * FROM Cats WHERE Cats.'name' = ?;`;
     db.get<Cat>(sql, "Maya", (error, row) => {
       if (error) reject(error);
-      console.log('blob type is: ', typeof row.image);
       const imageBase64 = row.image ? Buffer.from(row.image).toString("base64") : null;
       resolve({
         ...row,
