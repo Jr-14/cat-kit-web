@@ -1,25 +1,6 @@
-import {
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  Link,
-  useLoaderData,
-} from "@remix-run/react";
-import { json } from "@remix-run/node";
-import { getCatsDetails } from "./utils/fakeData";
-
-export const loader = async () => {
-  const data = await getCatsDetails();
-  if (!data) {
-    throw new Error("Failed to retrieve data");
-  }
-  return json({ cats: data });
-};
+import { Links, Meta, Outlet, Scripts, Link } from "@remix-run/react";
 
 export default function App() {
-  const { cats } = useLoaderData<typeof loader>();
-
   return (
     <html lang="en">
       <head>
@@ -30,16 +11,12 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <h1>Hello world!</h1>
+        <h1>Hello Cats!</h1>
         <nav>
-          <ul>
-            {cats.map((cat) => (
-              <li key={cat.id}>
-                <Link to={`/cats/${cat.id}`}>{`It's ${cat.name}`}</Link>
-              </li>
-            ))}
-            <Outlet />
-          </ul>
+          <Link to={`/`}>Home</Link>
+          <Link to={`/about`}>About</Link>
+          <Link to={`/cats`}>Cats</Link>
+          <Outlet />
         </nav>
 
         <Scripts />
