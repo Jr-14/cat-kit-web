@@ -2,8 +2,8 @@ import {
   Outlet,
   Link,
   useLoaderData,
-  useViewTransitionState,
 } from "@remix-run/react";
+import {} from "@remx-run/express";
 import { json } from "@remix-run/node";
 import { getCatsDetails } from "../utils/fakeData";
 
@@ -24,10 +24,10 @@ export default function CatLayout() {
           <li key={cat.id}>
             {/* <Link to={`/cats/${cat.id}`} reloadDocument>{`It's ${cat.name}`}</Link> */}
             <Link to={`/cats/${cat.id}`}>
-              <p>{`It's ${cat.name}`}</p>
               {cat.image && (
-                <img src={cat.image} alt={cat.name} width="200" height="200" />
+                <img src={cat.image} alt={cat.name} width="300" height="300" />
               )}
+              <p>{`It's ${cat.name}`}</p>
             </Link>
           </li>
         ))}
