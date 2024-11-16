@@ -8,7 +8,7 @@ const FILE_NAME = "testDb.sqlite";
 const dbFilePath = `${BASE_PATH}/${FILE_NAME}`;
 
 const createCatTable = (db: sqlite3.Database) => {
-    const createTableQuery = `CREATE TABLE IF NOT EXISTS Cats (
+  const createTableQuery = `CREATE TABLE IF NOT EXISTS Cats (
     id INTEGER NOT NULL PRIMARY KEY
     , microchip TEXT
     , name TEXT NOT NULL
@@ -16,53 +16,85 @@ const createCatTable = (db: sqlite3.Database) => {
     , dateOfBirth TEXT
     , sex TEXT NOT NULL
     , breed TEXT
+    , weight NUMBER
     , image BLOB
 );`;
 
-    db.run(createTableQuery);
+  db.run(createTableQuery);
 };
 
 const deleteCatTable = (db: sqlite3.Database) => {
-    const deleteTableQuery = `DROP TABLE IF EXISTS Cats;`;
+  const deleteTableQuery = `DROP TABLE IF EXISTS Cats;`;
 
-    db.run(deleteTableQuery);
+  db.run(deleteTableQuery);
 };
 
-const insertCatTable = (db: sqlite3.Database) => {
-    const cat = createCatFixture(
-        { name: 'Maya' },
-        { description: 'Funny girl', sex: 'Female', breed: 'Calico'}
-    );
-    const imagePath = "./maya.jpg";
-    const buffer = fs.readFileSync(imagePath);
-    const stmt = db.prepare(
-        "INSERT INTO Cats VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (error) => {
-            if (error) console.log(error);
-        }
-    );
-    stmt.run([1, cat.microchip, cat.name, cat.description, cat.dateOfBirth, cat.sex, cat.breed, buffer]);
-    stmt.finalize();
+const insertCatTable = (
+  db: sqlite3.Database,
+  cat: Omit<Cat, "image" | "id">,
+  id: number,
+) => {
+  const imagePath = `./images/${cat.name.toLowerCase()}.jpg`;
+  const buffer = fs.readFileSync(imagePath);
+  const stmt = db.prepare(
+    "INSERT INTO Cats VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    (error) => {
+      if (error) console.log(error);
+    },
+  );
+  stmt.run([
+    id,
+    cat.microchip,
+    cat.name,
+    cat.description,
+    cat.dateOfBirth,
+    cat.sex,
+    cat.breed,
+    cat.weight,
+    buffer,
+  ]);
+  stmt.finalize();
 };
 
 const printCatTable = (db: sqlite3.Database) => {
-    const sql = `SELECT * FROM Cats WHERE Cats.'name' = ?;`;
-    db.get<Cat>(sql, "Maya", (error, row) => {
-        if (error) throw error;
-        console.log(row);
-    })
-}
+  const sql = `SELECT * FROM Cats;`;
+  db.all<Cat>(sql, (error, rows) => {
+    if (error) throw error;
+    console.log(rows);
+  });
+};
 
 const run = async () => {
-    const db = new sqlite3.Database(dbFilePath);
+  const db = new sqlite3.Database(dbFilePath);
 
-    db.serialize(() => {
-        deleteCatTable(db);
-        createCatTable(db);
-        insertCatTable(db);
-        printCatTable(db);
-    });
+  const cats = [
+    createCatFixture(
+      { name: "Maya" },
+      { description: "Funny girl", sex: "Female", breed: "Calico" },
+    ),
+    createCatFixture(
+      { name: "Bruce" },
+      { description: "Chonky boy", sex: "Male", breed: "Tuxedo" },
+    ),
+    createCatFixture(
+      { name: "Bennie" },
+      {
+        description: "Wants to eat your food",
+        sex: "Male",
+        breed: "Black and white",
+      },
+    ),
+  ];
 
-    db.close();
+  db.serialize(() => {
+    deleteCatTable(db);
+    createCatTable(db);
+    cats.forEach((cat, index) => insertCatTable(db, cat, index));
+    // insertCatTable(db, "maya");
+    printCatTable(db);
+  });
+
+  db.close();
 };
 
 run();
