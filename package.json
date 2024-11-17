@@ -20,7 +20,9 @@
     "@remix-run/node": "^2.13.1",
     "@remix-run/react": "^2.13.1",
     "@remix-run/serve": "^2.13.1",
+    "compression": "^1.7.5",
     "isbot": "^4.4.0",
+    "pino": "^9.5.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "sqlite3": "^5.1.7",
@@ -29,6 +31,7 @@
   "devDependencies": {
     "@faker-js/faker": "^9.2.0",
     "@remix-run/dev": "^2.13.1",
+    "@types/compression": "^1.7.5",
     "@types/express": "^5.0.0",
     "@types/node": "^22.9.0",
     "@types/react": "^18.3.12",
