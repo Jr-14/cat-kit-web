@@ -1,9 +1,4 @@
-import {
-  Outlet,
-  Link,
-  useLoaderData,
-} from "@remix-run/react";
-import {} from "@remx-run/express";
+import { Form, Outlet, Link, useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import { getCatsDetails } from "../utils/fakeData";
 
@@ -15,24 +10,39 @@ export const loader = async () => {
   return json({ cats: data });
 };
 
+export const action = async () => {
+  // TODO - Create action
+  return json({});
+};
+
 export default function CatLayout() {
   const { cats } = useLoaderData<typeof loader>();
   return (
-    <nav>
-      <ul>
-        {cats.map((cat) => (
-          <li key={cat.id}>
-            {/* <Link to={`/cats/${cat.id}`} reloadDocument>{`It's ${cat.name}`}</Link> */}
-            <Link to={`/cats/${cat.id}`}>
-              {cat.image && (
-                <img src={cat.image} alt={cat.name} width="300" height="300" />
-              )}
-              <p>{`It's ${cat.name}`}</p>
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <Outlet />
-    </nav>
+    <div>
+      <Form method="post">
+        <button type="submit">New</button>
+      </Form>
+      <nav>
+        <ul>
+          {cats.map((cat) => (
+            <li key={cat.id}>
+              {/* <Link to={`/cats/${cat.id}`} reloadDocument>{`It's ${cat.name}`}</Link> */}
+              <Link to={`/cats/${cat.id}`}>
+                {cat.image && (
+                  <img
+                    src={cat.image}
+                    alt={cat.name}
+                    width="300"
+                    height="300"
+                  />
+                )}
+                <p>{`It's ${cat.name}`}</p>
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <Outlet />
+      </nav>
+    </div>
   );
 }

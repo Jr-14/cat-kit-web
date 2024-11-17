@@ -1,4 +1,4 @@
-import { useLoaderData } from "@remix-run/react";
+import { Form, useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { getCatById } from "~/utils/fakeData";
@@ -18,11 +18,15 @@ export default function Cat() {
 
   return (
     <div id="cat">
+      <Form action="edit">
+        <button type="submit">Edit</button>
+      </Form>
       <p>Name: {cat.name ?? ""}</p>
       <p>Microchip: {cat.microchip ?? ""}</p>
       <p>Description: {cat.description ?? ""}</p>
       <p>Breed: {cat.breed ?? ""}</p>
       <p>Sex: {cat.sex ?? ""}</p>
+      <p>Weight: {cat.weight ?? ""}</p>
       <p>
         Date of Birth:{" "}
         {cat.dateOfBirth ? new Date(cat.dateOfBirth).toDateString() : ""}
