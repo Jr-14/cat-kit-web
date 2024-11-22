@@ -11,7 +11,6 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <h1>Hello Cats!</h1>
         <nav>
           <Link to={`/`}>Home</Link>
           <Link to={`/about`}>About</Link>
@@ -19,6 +18,7 @@ export default function App() {
           <Outlet />
         </nav>
 
+        <h1>For my cats</h1>
         <Scripts />
       </body>
     </html>
