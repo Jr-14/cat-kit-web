@@ -17,8 +17,6 @@ export default function App() {
           <Link to={`/cats`}>Cats</Link>
           <Outlet />
         </nav>
-
-        <h1>For my cats</h1>
         <Scripts />
       </body>
     </html>
