@@ -84,6 +84,14 @@ const run = async () => {
         breed: "Black and white",
       },
     ),
+    createCatFixture(
+      { name: "Bumble" },
+      {
+        description: "Shy boy",
+        sex: "Male",
+        breed: "Tuxedo",
+      },
+    ),
   ];
 
   db.serialize(() => {
