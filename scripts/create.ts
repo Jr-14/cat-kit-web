@@ -31,19 +31,17 @@ const deleteCatTable = (db: sqlite3.Database) => {
 
 const insertCatTable = (
   db: sqlite3.Database,
-  cat: Omit<Cat, "image" | "id">,
-  id: number,
+  cat: Omit<Cat, "image" | "id">
 ) => {
   const imagePath = `./images/${cat.name.toLowerCase()}.jpg`;
   const buffer = fs.readFileSync(imagePath);
   const stmt = db.prepare(
-    "INSERT INTO Cats VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    "INSERT INTO Cats (microchip, name, description, dateOfBirth, sex, breed, weight, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
     (error) => {
       if (error) console.log(error);
     },
   );
   stmt.run([
-    id,
     cat.microchip,
     cat.name,
     cat.description,
@@ -113,8 +111,7 @@ const run = async () => {
   db.serialize(() => {
     deleteCatTable(db);
     createCatTable(db);
-    cats.forEach((cat, index) => insertCatTable(db, cat, index));
-    // insertCatTable(db, "maya");
+    cats.forEach((cat) => insertCatTable(db, cat));
     printCatTable(db);
   });
 
