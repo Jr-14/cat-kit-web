@@ -9,13 +9,9 @@ type Props = {
 const TileCats: React.FC<Props> = ({ cats }) => {
   return (
     <>
-      <nav>
-        <div className="tiles">
-          {cats.map((cat) => (
-            <TileCat cat={cat} />
-          ))}
-        </div>
-      </nav>
+      {cats.map((cat) => (
+        <TileCat cat={cat} />
+      ))}
     </>
   );
 };

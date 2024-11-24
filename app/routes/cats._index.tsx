@@ -2,6 +2,7 @@ import { Form, useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import { getCatsDetails } from "../utils/fakeData";
 import TileCats from "~/components/CatTiles";
+import AddCatTile from "~/components/AddCatTile";
 
 export const loader = async () => {
   const data = await getCatsDetails();
@@ -19,11 +20,13 @@ export const action = async () => {
 export default function CatLayout() {
   const { cats } = useLoaderData<typeof loader>();
   return (
-    <div>
-      <Form method="post">
-        <button type="submit">New</button>
-      </Form>
-      <TileCats cats={cats} />
-    </div>
+    <nav>
+      <div className="tiles-layout">
+        <Form method="post">
+          <AddCatTile />
+        </Form>
+        <TileCats cats={cats} />
+      </div>
+    </nav>
   );
 }

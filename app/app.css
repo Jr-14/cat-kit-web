@@ -38,37 +38,69 @@ body {
   text-decoration: underline;
 }
 
-div.tiles {
+div.tiles-layout {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
 
-.tiles a {
+.tiles-layout a {
   color: white;
   text-decoration: none;
 }
 
-.tile-cat {
+.tile {
+  font-size: 2em;
+  border: 2px solid;
+  width: 300px;
+  height: 100%;
+  border-radius: 20px;
+  margin: 10px;
+  overflow: clip;
+}
+
+.tile-add-cat {
   font-size: 2em;
   list-style-type: none;
   border: 2px solid;
+  border-color: #555555;
   width: 300px;
+  height: 350px;
   border-radius: 20px;
   margin: 10px;
   overflow: clip;
   transition: all 0.2s ease;
+  background-color: inherit;
 }
 
-.tile-cat a {
-  text-align: center;
+.tile-add-cat p {
+  color: #555555;
 }
 
-.tile-cat img {
+.tile-add-cat button {
+  height: 350px;
+}
+
+.tile-add-cat svg {
+  width: 300px;
+  height: 300px;
   text-align: center;
   object-fit: cover;
 }
 
-.tile-cat:hover {
+.tile a {
+  text-align: center;
+}
+
+.tile img {
+  text-align: center;
+  object-fit: cover;
+}
+
+.enlarge-on-hover {
+  transition: all 0.2s ease;
+}
+
+.enlarge-on-hover:hover {
   transform: scale(1.1);
 }
