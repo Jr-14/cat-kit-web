@@ -42,6 +42,7 @@ div.tiles-layout {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  margin-top: 15px;
 }
 
 .tiles-layout a {
@@ -98,9 +99,9 @@ div.tiles-layout {
 }
 
 .enlarge-on-hover {
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
 }
 
 .enlarge-on-hover:hover {
-  transform: scale(1.1);
+  transform: scale(1.08);
 }
