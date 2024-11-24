@@ -3,7 +3,7 @@ import type { Cat } from "~/schemas/catSchema";
 
 const db = new sqlite3.Database("./db/testDb.sqlite");
 
-type CatDetails = Pick<Cat, "id" | "name" | "image">;
+export type CatDetails = Pick<Cat, "id" | "name" | "image">;
 
 const CATS_TABLE = "Cats";
 

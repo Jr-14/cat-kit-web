@@ -1,6 +1,7 @@
-import { Form, Outlet, Link, useLoaderData } from "@remix-run/react";
+import { Form, useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import { getCatsDetails } from "../utils/fakeData";
+import TileCats from "~/components/CatTiles";
 
 export const loader = async () => {
   const data = await getCatsDetails();
@@ -22,27 +23,7 @@ export default function CatLayout() {
       <Form method="post">
         <button type="submit">New</button>
       </Form>
-      <nav>
-        <ul>
-          {cats.map((cat) => (
-            <li key={cat.id}>
-              {/* <Link to={`/cats/${cat.id}`} reloadDocument>{`It's ${cat.name}`}</Link> */}
-              <Link to={`/cats/${cat.id}`}>
-                {cat.image && (
-                  <img
-                    src={cat.image}
-                    alt={cat.name}
-                    width="300"
-                    height="300"
-                  />
-                )}
-                <p>{`It's ${cat.name}`}</p>
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <Outlet />
-      </nav>
+      <TileCats cats={cats} />
     </div>
   );
 }

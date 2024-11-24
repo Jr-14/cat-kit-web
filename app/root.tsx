@@ -18,12 +18,12 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <nav>
+        <nav className="navigation-home">
           <Link to={`/`}>Home</Link>
           <Link to={`/about`}>About</Link>
           <Link to={`/cats`}>Cats</Link>
-          <Outlet />
         </nav>
+        <Outlet />
         <Scripts />
       </body>
     </html>

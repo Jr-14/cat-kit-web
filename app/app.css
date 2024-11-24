@@ -1,7 +1,72 @@
+/* CSS Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #222222;
+  color: white;
+}
+
+.navigation-home {
+  margin-top: 10px;
+  display: flex;
+  font-size: 1.15em;
+}
+
+.navigation-home a {
+  padding: 10px 0px 10px 0px;
+  margin-right: 20px;
+  text-decoration: none;
+  color: cyan;
+}
+
+.navigation-home a:hover {
+  color: hotpink;
+  text-decoration: underline;
+}
+
+div.tiles {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.tiles a {
+  color: white;
+  text-decoration: none;
+}
+
+.tile-cat {
+  font-size: 3em;
+  list-style-type: none;
+  border: 2px solid;
+  width: 300px;
+  border-radius: 20px;
+  margin: 10px;
+  overflow: clip;
+  transition: all 0.2s ease;
+}
+
+.tile-cat a {
+  text-align: center;
+}
+
+.tile-cat img {
+  text-align: center;
+  object-fit: cover;
+}
+
+.tile-cat:hover {
+  transform: scale(1.1);
 }
