@@ -10,7 +10,7 @@ const TileCats: React.FC<Props> = ({ cats }) => {
   return (
     <>
       {cats.map((cat) => (
-        <TileCat cat={cat} />
+        <TileCat cat={cat} key={cat.id} />
       ))}
     </>
   );
