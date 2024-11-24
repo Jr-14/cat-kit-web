@@ -92,6 +92,22 @@ const run = async () => {
         breed: "Tuxedo",
       },
     ),
+    createCatFixture(
+      { name: "Ollie" },
+      {
+        description: "Gentle ginger",
+        sex: "Male",
+        breed: "Ginger",
+      },
+    ),
+    createCatFixture(
+      { name: "Mishka" },
+      {
+        description: "Playful Senior Bengal",
+        sex: "Female",
+        breed: "Bengal",
+      },
+    ),
   ];
 
   db.serialize(() => {
