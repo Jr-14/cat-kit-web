@@ -31,7 +31,7 @@ const deleteCatTable = (db: sqlite3.Database) => {
 
 const insertCatTable = (
   db: sqlite3.Database,
-  cat: Omit<Cat, "image" | "id">
+  cat: Omit<Cat, "image" | "id">,
 ) => {
   const imagePath = `./images/${cat.name.toLowerCase()}.jpg`;
   const buffer = fs.readFileSync(imagePath);

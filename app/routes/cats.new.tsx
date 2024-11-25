@@ -1,39 +1,34 @@
-import { json, redirect } from "@remix-run/node";
-import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { updateCatById, getCatById } from "~/model/CatsModel";
-import assert from "assert";
-import { Form, useLoaderData, useNavigate } from "@remix-run/react";
-
-export const loader = async ({ params }: LoaderFunctionArgs) => {
-  assert(params.catId, "Missing catId");
-  const cat = await getCatById(params.catId);
-
-  if (!cat) {
-    throw new Response("Cat not found", { status: 404 });
-  }
-
-  return json({ cat });
-};
+import React from "react";
+import { ActionFunctionArgs, redirect } from "@remix-run/node";
+import { Form, useNavigate, useLoaderData } from "@remix-run/react";
+import { createCat, getCatById } from "~/model/CatsModel";
+import { CreateNewCatSchema } from "~/schemas/catSchema";
 
 export const action = async ({ params, request }: ActionFunctionArgs) => {
-  assert(params.catId, "Missing catId params");
+  // TODO-JR: Validate form data has the necessary schema
   const formData = await request.formData();
-  const updates = Object.fromEntries(formData);
-  await updateCatById(params.catId, updates);
-  return redirect(`/cats/${params.catId}`);
+  const newCatData = Object.fromEntries(formData);
+  console.log("New cat data", newCatData);
+  const parsedCatData = CreateNewCatSchema.parse(newCatData);
+  const createdCat = await createCat(parsedCatData);
+  return redirect(`/cats/${createdCat.id}`);
 };
 
-export default function EditCat() {
-  const { cat } = useLoaderData<typeof loader>();
+export const loader = async () => {
+  return null;
+};
+
+const NewCat: React.FC = () => {
   const navigate = useNavigate();
+  useLoaderData<typeof loader>();
 
   return (
-    <Form key={cat.id} method="post">
+    <Form method="post">
       <p>
         <span>Name: </span>
         <input
           aria-label="Name"
-          defaultValue={cat.name}
+          defaultValue="Name..."
           name="name"
           placeholder="Name"
           type="text"
@@ -43,7 +38,7 @@ export default function EditCat() {
         <span>Microchip</span>
         <input
           aria-label="Microchip"
-          defaultValue={cat.microchip ?? ""}
+          defaultValue="Microchip..."
           name="microchip"
           placeholder="Microchip"
           type="text"
@@ -53,7 +48,7 @@ export default function EditCat() {
         <span>Description</span>
         <input
           aria-label="Description"
-          defaultValue={cat.description ?? ""}
+          defaultValue="Description..."
           name="description"
           placeholder="Description"
           type="text"
@@ -63,7 +58,7 @@ export default function EditCat() {
         <span>Breed</span>
         <input
           aria-label="Breed"
-          defaultValue={cat.breed ?? ""}
+          defaultValue="Breed..."
           name="breed"
           placeholder="Breed"
           type="text"
@@ -73,7 +68,7 @@ export default function EditCat() {
         <span>Sex</span>
         <input
           aria-label="Sex"
-          defaultValue={cat.sex ? String(cat.sex) : ""}
+          defaultValue="Sex..."
           name="sex"
           placeholder="Sex"
           type="text"
@@ -83,7 +78,7 @@ export default function EditCat() {
         <span>Weight</span>
         <input
           aria-label="weight"
-          defaultValue={cat.weight ?? ""}
+          defaultValue="Weight..."
           name="weight"
           placeholder="Weight"
           type="text"
@@ -93,7 +88,7 @@ export default function EditCat() {
         <span>Date of Birth</span>
         <input
           aria-label="Date of Birth"
-          defaultValue={cat.dateOfBirth ?? ""}
+          defaultValue="Date of birth..."
           name="dateOfBirth"
           placeholder="Date of Birth"
           type="text"
@@ -107,4 +102,6 @@ export default function EditCat() {
       </p>
     </Form>
   );
-}
+};
+
+export default NewCat;

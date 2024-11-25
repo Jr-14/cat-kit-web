@@ -1,4 +1,4 @@
-import { Form, useLoaderData } from "@remix-run/react";
+import { Link, Form, useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import { getCatsDetails } from "../utils/fakeData";
 import TileCats from "~/components/CatTiles";
@@ -19,14 +19,44 @@ export const action = async () => {
 
 export default function CatLayout() {
   const { cats } = useLoaderData<typeof loader>();
+
   return (
     <nav>
       <div className="tiles-layout">
-        <Form method="post">
-          <AddCatTile />
-        </Form>
+        <div className="tile enlarge-on-hover">
+          {/* <Link to={`/cats/${cat.id}`} reloadDocument>{`It's ${cat.name}`}</Link> */}
+          <Link to={`/cats/new`}>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                {" "}
+                <path
+                  d="M6 12H18M12 6V18"
+                  stroke="#555555"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                ></path>{" "}
+              </g>
+            </svg>
+            <p>Add a cat</p>
+          </Link>
+        </div>
         <TileCats cats={cats} />
       </div>
     </nav>
   );
 }
+
+// <Form method="post">
+//   <AddCatTile />
+// </Form>

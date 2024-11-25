@@ -29,6 +29,36 @@ const prepareUpdateState = (update: Partial<Cat>): [string, object] => {
   return [statement, namedParameters];
 };
 
+export const createCat = async (newCat: Partial<Cat>): Promise<Cat> => {
+  // const imagePath = `./images/${newCat.name.toLowerCase()}.jpg`;
+  // const buffer = fs.readFileSync(imagePath);
+  return new Promise<number>((resolve, reject) => {
+    const stmt = db.prepare(
+      "INSERT INTO Cats (microchip, name, description, dateOfBirth, sex, breed, weight) VALUES (?, ?, ?, ?, ?, ?, ?)",
+      (error) => {
+        if (error) console.log(error);
+      },
+    );
+    stmt.run(
+      [
+        newCat.microchip,
+        newCat.name,
+        newCat.description,
+        newCat.dateOfBirth,
+        newCat.sex,
+        newCat.breed,
+        newCat.weight,
+      ],
+      function (error) {
+        if (error) {
+          reject(error);
+        }
+        resolve(this.lastID);
+      },
+    );
+  }).then((id) => getCatById(id));
+};
+
 export const getCatsDetails = async (): Promise<CatDetails[]> => {
   return new Promise((resolve, reject) => {
     const sql = `SELECT id, name, image FROM ${CATS_TABLE};`;
@@ -91,7 +121,7 @@ export const getAllCats = async (): Promise<Cat[]> => {
   });
 };
 
-export const getCatById = async (id: string): Promise<Cat> => {
+export const getCatById = async (id: string | number): Promise<Cat> => {
   return new Promise((resolve, reject) => {
     const sql = `SELECT * FROM Cats WHERE Cats."id" = ?;`;
     db.get<Cat>(sql, id, (error, row) => {
