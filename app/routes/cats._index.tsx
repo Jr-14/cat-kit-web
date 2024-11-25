@@ -1,8 +1,7 @@
-import { Link, Form, useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
-import { getCatsDetails } from "../utils/fakeData";
+import { getCatsDetails } from "~/model/CatsModel";
 import TileCats from "~/components/CatTiles";
-import AddCatTile from "~/components/AddCatTile";
 
 export const loader = async () => {
   const data = await getCatsDetails();

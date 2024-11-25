@@ -26,39 +26,6 @@ export const getCatsDetails = async (): Promise<CatDetails[]> => {
   });
 };
 
-export const updateCat = async (
-  catId: string,
-  updates: Partial<Cat>,
-): Promise<void> => {
-  return new Promise((resolve, reject) => {
-    const sql = `UPDATE ${CATS_TABLE}
-`;
-    db.run();
-  });
-};
-
-export const getData = async (): Promise<Cat[]> => {
-  return new Promise((resolve, reject) => {
-    const sql = `SELECT * FROM ${CATS_TABLE};`;
-    db.all<Cat>(sql, (error, rows) => {
-      if (error) reject(error);
-      const cats = rows.map((row) => {
-        const imageBase64 = row.image
-          ? Buffer.from(row.image).toString("base64")
-          : null;
-        return {
-          ...row,
-          image: imageBase64 ? `data:image/jpeg;base64,${imageBase64}` : null,
-        };
-      });
-      resolve(cats);
-    });
-  });
-  // const data = await retrieve(db);
-  // db.close();
-  // return data;
-};
-
 export const getCatById = async (id: string): Promise<Cat> => {
   return new Promise((resolve, reject) => {
     const sql = `SELECT * FROM Cats WHERE Cats."id" = ?;`;

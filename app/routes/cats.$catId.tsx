@@ -1,7 +1,7 @@
 import { Form, useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import type { LoaderFunctionArgs } from "@remix-run/node";
-import { getCatById } from "~/utils/fakeData";
+import { getCatById } from "~/model/CatsModel";
 import assert from "assert";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
@@ -20,6 +20,20 @@ export default function Cat() {
     <div id="cat">
       <Form action="edit">
         <button type="submit">Edit</button>
+      </Form>
+      <Form
+        action="destroy"
+        method="post"
+        onSubmit={(event) => {
+          const response = confirm(
+            "Please confirm you want to delete the record",
+          );
+          if (!response) {
+            event.preventDefault();
+          }
+        }}
+      >
+        <button type="submit">Delete</button>
       </Form>
       <p>Name: {cat.name ?? ""}</p>
       <p>Microchip: {cat.microchip ?? ""}</p>
