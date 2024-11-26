@@ -68,6 +68,7 @@ div.tiles-layout {
   border-radius: 20px;
   margin: 10px;
   overflow: clip;
+  position: relative;
 }
 
 .tile-add-cat {

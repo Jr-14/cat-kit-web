@@ -1,4 +1,4 @@
-import { json, redirect } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { updateCatById, getCatById } from "~/model/CatsModel";
 import assert from "assert";
@@ -12,7 +12,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     throw new Response("Cat not found", { status: 404 });
   }
 
-  return json({ cat });
+  return Response.json({ cat });
 };
 
 export const action = async ({ params, request }: ActionFunctionArgs) => {

@@ -136,3 +136,15 @@ export const getCatById = async (id: string | number): Promise<Cat> => {
     });
   });
 };
+
+export const deleteCatById = async (id: string | number): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    const sql = `DELETE FROM ${CATS_TABLE} WHERE Cats."id" = ?;`;
+    db.run(sql, id, (error) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(undefined);
+    });
+  });
+};

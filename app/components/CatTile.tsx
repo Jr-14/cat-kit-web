@@ -9,7 +9,6 @@ type Props = {
 const TileCat: React.FC<Props> = ({ cat }) => {
   return (
     <div className="tile enlarge-on-hover">
-      {/* <Link to={`/cats/${cat.id}`} reloadDocument>{`It's ${cat.name}`}</Link> */}
       <Link to={`/cats/${cat.id}`}>
         {cat.image && (
           <img src={cat.image} alt={cat.name} width="300" height="300" />

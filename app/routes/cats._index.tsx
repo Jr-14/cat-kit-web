@@ -1,20 +1,18 @@
-import { Link, Form, useLoaderData } from "@remix-run/react";
-import { json } from "@remix-run/node";
-import { getCatsDetails } from "../utils/fakeData";
+import { Link, useLoaderData } from "@remix-run/react";
+import { getCatsDetails } from "~/model/CatsModel";
 import TileCats from "~/components/CatTiles";
-import AddCatTile from "~/components/AddCatTile";
 
 export const loader = async () => {
   const data = await getCatsDetails();
   if (!data) {
     throw new Error("Failed to retrieve data");
   }
-  return json({ cats: data });
+  return Response.json({ cats: data });
 };
 
 export const action = async () => {
   // TODO - Create action
-  return json({});
+  return Response.json({});
 };
 
 export default function CatLayout() {
@@ -24,7 +22,6 @@ export default function CatLayout() {
     <nav>
       <div className="tiles-layout">
         <div className="tile enlarge-on-hover">
-          {/* <Link to={`/cats/${cat.id}`} reloadDocument>{`It's ${cat.name}`}</Link> */}
           <Link to={`/cats/new`}>
             <svg
               viewBox="0 0 24 24"
@@ -56,7 +53,3 @@ export default function CatLayout() {
     </nav>
   );
 }
-
-// <Form method="post">
-//   <AddCatTile />
-// </Form>
