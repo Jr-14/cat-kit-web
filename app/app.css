@@ -72,32 +72,11 @@ div.tiles-layout {
 }
 
 .tile-add-cat {
-  font-size: 2em;
-  list-style-type: none;
-  border: 2px solid;
   border-color: #555555;
-  width: 300px;
-  height: 350px;
-  border-radius: 20px;
-  margin: 10px;
-  overflow: clip;
-  transition: all 0.2s ease;
-  background-color: inherit;
 }
 
 .tile-add-cat p {
   color: #555555;
-}
-
-.tile-add-cat button {
-  height: 350px;
-}
-
-.tile-add-cat svg {
-  width: 300px;
-  height: 300px;
-  text-align: center;
-  object-fit: cover;
 }
 
 .tile a {

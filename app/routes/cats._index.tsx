@@ -21,7 +21,7 @@ export default function CatLayout() {
   return (
     <nav>
       <div className="tiles-layout">
-        <div className="tile enlarge-on-hover">
+        <div className="tile tile-add-cat enlarge-on-hover">
           <Link to={`/cats/new`}>
             <svg
               viewBox="0 0 24 24"
