@@ -1,5 +1,4 @@
 import { Form, useLoaderData } from "@remix-run/react";
-import { json } from "@remix-run/node";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { getCatById } from "~/model/CatsModel";
 import assert from "assert";
@@ -10,7 +9,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   if (!cat) {
     throw new Response("Cat not found", { status: 404 });
   }
-  return json({ cat });
+  return Response.json({ cat });
 };
 
 export default function Cat() {
