@@ -2,7 +2,7 @@ import { Link, useLoaderData } from "@remix-run/react";
 import { CatDetails, getCatsDetails } from "~/model/CatsModel";
 import TileCats from "~/components/CatTiles";
 import { useState } from "react";
-import { useDebounce } from "use-debounce";
+import { useDebouncedCallback } from "use-debounce";
 
 export const loader = async () => {
   const data = await getCatsDetails();
@@ -20,14 +20,17 @@ export const action = async () => {
 
 export default function CatLayout() {
   const { cats } = useLoaderData<{ cats: CatDetails[] }>();
-  console.log("I am loading cats");
-
-  // const [filteredCats, setCats] = useState<CatDetails[]>(cats);
+  console.log("I am loading cats", { amount: cats.length });
 
   const [searchText, setSearchText] = useState<string>("");
 
+  const searchDebounce = useDebouncedCallback(
+    (text) => setSearchText(text),
+    500,
+  );
+
   const handleOnSearch = (event: any) => {
-    setSearchText(event.target.value);
+    return searchDebounce(event.target.value);
   };
 
   const filteredCats = cats.filter((cat) =>
