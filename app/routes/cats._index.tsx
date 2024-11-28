@@ -29,7 +29,7 @@ export default function CatLayout() {
     500,
   );
 
-  const handleOnSearch = (event: any) => {
+  const handleOnSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     return searchDebounce(event.target.value);
   };
 
@@ -39,16 +39,15 @@ export default function CatLayout() {
 
   return (
     <>
-      <form>
-        <input
-          type="search"
-          id="search-cat"
-          name="find-my-cat"
-          placeholder="cat..."
-          aria-label="Search through cats"
-          onChange={handleOnSearch}
-        />
-      </form>
+      <form></form>
+      <input
+        type="search"
+        id="search-cat"
+        name="find-my-cat"
+        placeholder="cat..."
+        aria-label="Search through cats"
+        onChange={handleOnSearch}
+      />
       <nav>
         <div className="tiles-layout">
           <div className="tile tile-add-cat enlarge-on-hover">
