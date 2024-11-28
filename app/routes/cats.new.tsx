@@ -8,7 +8,6 @@ export const action = async ({ params, request }: ActionFunctionArgs) => {
   // TODO-JR: Validate form data has the necessary schema
   const formData = await request.formData();
   const newCatData = Object.fromEntries(formData);
-  console.log("New cat data", newCatData);
   const parsedCatData = CreateNewCatSchema.parse(newCatData);
   const createdCat = await createCat(parsedCatData);
   return redirect(`/cats/${createdCat.id}`);
