@@ -39,9 +39,9 @@ export default function CatLayout() {
 
   return (
     <>
-      <form></form>
       <input
         type="search"
+        className="text-search"
         id="search-cat"
         name="find-my-cat"
         placeholder="cat..."
