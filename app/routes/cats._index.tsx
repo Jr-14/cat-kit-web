@@ -23,14 +23,39 @@ export default function CatLayout() {
 
   const [searchText, setSearchText] = useState<string>("");
   const [sortValue, setSortValue] = useState<string | null>(null);
+  const [catsList, setCatsList] = useState<CatDetails[]>(cats);
 
-  const searchDebounce = useDebouncedCallback(
-    (text) => setSearchText(text),
-    500,
-  );
+  const searchDebounce = useDebouncedCallback((text) => {
+    setSearchText(text);
+    const filteredCats = text
+      ? cats
+          .filter((cat) => cat.name.toLowerCase().includes(text.toLowerCase()))
+          .sort(catSortCompareFunction)
+      : cats.sort(catSortCompareFunction);
+    return setCatsList(filteredCats);
+  }, 500);
+
+  const catSortCompareFunction = (
+    firstCat: CatDetails,
+    secondCat: CatDetails,
+  ): -1 | 0 | 1 => {
+    switch (sortValue) {
+      case "name":
+        if (firstCat.name < secondCat.name) {
+          return -1;
+        } else if (firstCat.name > secondCat.name) {
+          return 1;
+        } else {
+          return 0;
+        }
+      default:
+        return 0;
+    }
+  };
 
   const handleOnSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    return searchDebounce(event.target.value);
+    const searchValue = event.target.value;
+    searchDebounce(searchValue);
   };
 
   const handleOnSortSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -38,23 +63,6 @@ export default function CatLayout() {
     console.log(selectValue);
     setSortValue(selectValue);
   };
-
-  const filteredCats = cats
-    .filter((cat) => cat.name.toLowerCase().includes(searchText.toLowerCase()))
-    .sort((aCat, bCat) => {
-      switch (sortValue) {
-        case "name":
-          if (aCat.name < bCat.name) {
-            return -1;
-          } else if (aCat.name > bCat.name) {
-            return 1;
-          } else {
-            return 0;
-          }
-        default:
-          return 0;
-      }
-    });
 
   return (
     <>
@@ -109,7 +117,7 @@ export default function CatLayout() {
               <p>Add a cat</p>
             </Link>
           </div>
-          <TileCats cats={filteredCats} />
+          <TileCats cats={catsList} />
         </div>
       </nav>
     </>
