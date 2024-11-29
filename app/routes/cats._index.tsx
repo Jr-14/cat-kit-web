@@ -22,6 +22,7 @@ export default function CatLayout() {
   console.log("I am loading cats", { amount: cats.length });
 
   const [searchText, setSearchText] = useState<string>("");
+  const [sortValue, setSortValue] = useState<string | null>(null);
 
   const searchDebounce = useDebouncedCallback(
     (text) => setSearchText(text),
@@ -32,9 +33,28 @@ export default function CatLayout() {
     return searchDebounce(event.target.value);
   };
 
-  const filteredCats = cats.filter((cat) =>
-    cat.name.toLowerCase().includes(searchText.toLowerCase()),
-  );
+  const handleOnSortSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectValue = event.target.value;
+    console.log(selectValue);
+    setSortValue(selectValue);
+  };
+
+  const filteredCats = cats
+    .filter((cat) => cat.name.toLowerCase().includes(searchText.toLowerCase()))
+    .sort((aCat, bCat) => {
+      switch (sortValue) {
+        case "name":
+          if (aCat.name < bCat.name) {
+            return -1;
+          } else if (aCat.name > bCat.name) {
+            return 1;
+          } else {
+            return 0;
+          }
+        default:
+          return 0;
+      }
+    });
 
   return (
     <>
@@ -47,6 +67,19 @@ export default function CatLayout() {
         aria-label="Search through cats"
         onChange={handleOnSearch}
       />
+      <select
+        name="sort-by"
+        id="cat-tiles-sort-by"
+        onChange={handleOnSortSelect}
+      >
+        <option disabled selected value="id">
+          Sort by
+        </option>
+        <option value="name">Name</option>
+        <option value="age">Age</option>
+        <option value="dateOfBirth">Date of Birth</option>
+        <option value="weight">Weight</option>
+      </select>
       <nav>
         <div className="tiles-layout">
           <div className="tile tile-add-cat enlarge-on-hover">
