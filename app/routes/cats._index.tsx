@@ -9,8 +9,7 @@ export const loader = async () => {
   if (!data) {
     throw new Error("Failed to retrieve data");
   }
-  const resp = Response.json({ cats: data });
-  return resp;
+  return Response.json({ cats: data });
 };
 
 export const action = async () => {
