@@ -79,10 +79,8 @@ export default function CatLayout() {
         name="sort-by"
         id="cat-tiles-sort-by"
         onChange={handleOnSortSelect}
+        defaultValue=""
       >
-        <option disabled selected value="id">
-          Sort by
-        </option>
         <option value="name">Name</option>
         <option value="age">Age</option>
         <option value="dateOfBirth">Date of Birth</option>
