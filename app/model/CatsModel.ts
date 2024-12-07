@@ -1,5 +1,5 @@
 import sqlite3 from "sqlite3";
-import { CatSchema, CatDetailsSchema } from "~/schemas/catSchema";
+import { CatDetailsSchema } from "~/schemas/catSchema";
 import type { Cat, CatDetails } from "~/schemas/catSchema";
 
 const db = new sqlite3.Database("./db/testDb.sqlite");

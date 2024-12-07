@@ -84,26 +84,29 @@ export default function CatLayout() {
 
   return (
     <>
-      <input
-        type="search"
-        className="text-search"
-        id="search-cat"
-        name="find-my-cat"
-        placeholder="cat..."
-        aria-label="Search through cats"
-        onChange={handleOnSearch}
-      />
-      <select
-        name="sort-by"
-        id="cat-tiles-sort-by"
-        onChange={handleOnSortSelect}
-        defaultValue="name"
-      >
-        <option value="name">Name</option>
-        <option value="age">Age</option>
-        <option value="dateOfBirth">Date of Birth</option>
-        <option value="weight">Weight</option>
-      </select>
+      <div>
+        <input
+          type="search"
+          className="text-search"
+          id="search-cat"
+          name="find-my-cat"
+          placeholder="cat..."
+          aria-label="Search through cats"
+          onChange={handleOnSearch}
+        />
+        <select
+          name="sort-by"
+          className="cat-sort"
+          id="cat-tiles-sort-by"
+          onChange={handleOnSortSelect}
+          defaultValue="name"
+        >
+          <option value="name">Name</option>
+          <option value="age">Age</option>
+          <option value="dateOfBirth">Date of Birth</option>
+          <option value="weight">Weight</option>
+        </select>
+      </div>
       <nav>
         <div className="tiles-layout">
           <div className="tile tile-add-cat enlarge-on-hover">
