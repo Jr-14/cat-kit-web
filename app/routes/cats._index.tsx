@@ -1,7 +1,8 @@
 import { Link, useLoaderData } from "@remix-run/react";
-import { CatDetails, getCatsDetails } from "~/model/CatsModel";
+import { getCatsDetails } from "~/model/CatsModel";
+import type { CatDetails, CatDetail } from "~/schemas/catSchema";
 import TileCats from "~/components/CatTiles";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 
 export const loader = async () => {
@@ -18,26 +19,15 @@ export const action = async () => {
 };
 
 export default function CatLayout() {
-  const { cats } = useLoaderData<{ cats: CatDetails[] }>();
+  const { cats } = useLoaderData<{ cats: CatDetails }>();
   console.log("I am loading cats", { amount: cats.length });
 
   const [searchText, setSearchText] = useState<string>("");
   const [sortValue, setSortValue] = useState<string | null>(null);
-  const [catsList, setCatsList] = useState<CatDetails[]>(cats);
-
-  const searchDebounce = useDebouncedCallback((text) => {
-    setSearchText(text);
-    const filteredCats = text
-      ? cats
-          .filter((cat) => cat.name.toLowerCase().includes(text.toLowerCase()))
-          .sort(catSortCompareFunction)
-      : cats.sort(catSortCompareFunction);
-    return setCatsList(filteredCats);
-  }, 500);
 
   const catSortCompareFunction = (
-    firstCat: CatDetails,
-    secondCat: CatDetails,
+    firstCat: CatDetail,
+    secondCat: CatDetail,
   ): -1 | 0 | 1 => {
     switch (sortValue) {
       case "name":
@@ -48,10 +38,39 @@ export default function CatLayout() {
         } else {
           return 0;
         }
+      case "weight":
+        if (firstCat.weight < secondCat.weight) {
+          return -1;
+        } else if (firstCat.weight > secondCat.weight) {
+          return 1;
+        } else {
+          return 0;
+        }
       default:
-        return 0;
+        if (firstCat.id < secondCat.id) {
+          return -1;
+        } else if (firstCat.id > secondCat.id) {
+          return 1;
+        } else {
+          return 0;
+        }
     }
   };
+
+  const visibleCats = useMemo(() => {
+    const filteredCats = searchText
+      ? cats
+          .filter((cat) =>
+            cat.name.toLowerCase().includes(searchText.toLowerCase()),
+          )
+          .sort(catSortCompareFunction)
+      : cats.sort(catSortCompareFunction);
+    return filteredCats;
+  }, [searchText, sortValue]);
+
+  const searchDebounce = useDebouncedCallback((text) => {
+    setSearchText(text);
+  }, 500);
 
   const handleOnSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchValue = event.target.value;
@@ -60,7 +79,6 @@ export default function CatLayout() {
 
   const handleOnSortSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectValue = event.target.value;
-    console.log(selectValue);
     setSortValue(selectValue);
   };
 
@@ -79,7 +97,7 @@ export default function CatLayout() {
         name="sort-by"
         id="cat-tiles-sort-by"
         onChange={handleOnSortSelect}
-        defaultValue=""
+        defaultValue="name"
       >
         <option value="name">Name</option>
         <option value="age">Age</option>
@@ -115,7 +133,7 @@ export default function CatLayout() {
               <p>Add a cat</p>
             </Link>
           </div>
-          <TileCats cats={catsList} />
+          <TileCats cats={visibleCats} />
         </div>
       </nav>
     </>

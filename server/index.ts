@@ -46,10 +46,10 @@ app.use(express.static("build/client", { maxAge: "1h" }));
 app.use(morgan("tiny"));
 
 // https://github.com/remix-run/remix/issues/9311
-// Error: No route matches URL "/installHook.js.map" 
+// Error: No route matches URL "/installHook.js.map"
 // https://www.reddit.com/r/remixrun/comments/1h73a3q/error_no_route_matches_url_installhookjsmap/
 app.get("/installHook.js.map", (_, res) => {
-	res.send({});
+  res.send({});
 });
 
 // handle SSR requests
@@ -59,4 +59,3 @@ const port = process.env.PORT || 3000;
 app.listen(port, () =>
   console.log(`Express server listening at http://localhost:${port}`),
 );
-
