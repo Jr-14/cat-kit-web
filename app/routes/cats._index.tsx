@@ -90,7 +90,7 @@ export default function CatLayout() {
           className="text-search"
           id="search-cat"
           name="find-my-cat"
-          placeholder="cat..."
+          placeholder="Search for a cat..."
           aria-label="Search through cats"
           onChange={handleOnSearch}
         />
@@ -99,10 +99,12 @@ export default function CatLayout() {
           className="cat-sort"
           id="cat-tiles-sort-by"
           onChange={handleOnSortSelect}
-          defaultValue="name"
+          defaultValue=""
         >
+          <option disabled value="">
+            Sort by...
+          </option>
           <option value="name">Name</option>
-          <option value="age">Age</option>
           <option value="dateOfBirth">Date of Birth</option>
           <option value="weight">Weight</option>
         </select>
