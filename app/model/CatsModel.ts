@@ -1,9 +1,8 @@
 import sqlite3 from "sqlite3";
-import type { Cat } from "~/schemas/catSchema";
+import { CatDetailsSchema } from "~/schemas/catSchema";
+import type { Cat, CatDetails } from "~/schemas/catSchema";
 
 const db = new sqlite3.Database("./db/testDb.sqlite");
-
-export type CatDetails = Pick<Cat, "id" | "name" | "image">;
 
 const CATS_TABLE = "Cats";
 
@@ -59,9 +58,9 @@ export const createCat = async (newCat: Partial<Cat>): Promise<Cat> => {
   }).then((id) => getCatById(id));
 };
 
-export const getCatsDetails = async (): Promise<CatDetails[]> => {
+export const getCatsDetails = async (): Promise<CatDetails> => {
   return new Promise((resolve, reject) => {
-    const sql = `SELECT id, name, image FROM ${CATS_TABLE};`;
+    const sql = `SELECT id, name, dateOfBirth, weight, image FROM ${CATS_TABLE};`;
 
     db.all<Cat>(sql, (error, rows) => {
       if (error) reject(error);
@@ -76,7 +75,7 @@ export const getCatsDetails = async (): Promise<CatDetails[]> => {
         };
       });
 
-      resolve(catDetails);
+      resolve(CatDetailsSchema.parse(catDetails));
     });
   });
 };
