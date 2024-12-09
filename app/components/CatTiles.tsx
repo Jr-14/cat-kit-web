@@ -1,9 +1,9 @@
 import React from "react";
-import type { CatDetails } from "~/model/CatsModel";
+import type { CatDetails } from "~/schemas/catSchema";
 import TileCat from "./CatTile";
 
 type Props = {
-  cats: CatDetails[];
+  cats: CatDetails;
 };
 
 const TileCats: React.FC<Props> = ({ cats }) => {
