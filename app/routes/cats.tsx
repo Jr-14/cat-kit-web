@@ -1,10 +1,9 @@
 import { Outlet } from "@remix-run/react";
 
+// Current layout not used but can be
 export default function CatHomePage() {
   return (
     <>
-      <h1>These are all your cats!</h1>
-
       <Outlet />
     </>
   );
