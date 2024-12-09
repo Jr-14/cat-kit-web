@@ -132,3 +132,6 @@ dist
 
 # MacOS
 .DS_Store
+
+# DB directory
+db
